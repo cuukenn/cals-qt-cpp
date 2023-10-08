@@ -1,6 +1,5 @@
 #include "calscontext.h"
 #include "calculate.hpp"
-#include <QDebug>
 CalsContext::CalsContext(QObject *parent)
     : QObject{parent}
 {
@@ -68,13 +67,11 @@ void CalsContext::sendOps(const QString &ops)
     (CALS_CONTEXT_TYPENAME, CALS_CONTEXT_TYPENAME) = this->operations[opsStr];
     if (operationPtr != nullptr)
     {
-        qDebug("t");
         const string lastOpsStr = this->getCurOps().toStdString();
         CALS_CONTEXT_TYPENAME(*lastOperationPtr)
         (CALS_CONTEXT_TYPENAME, CALS_CONTEXT_TYPENAME) = this->operations[lastOpsStr];
         if (lastOperationPtr != nullptr)
         {
-            qDebug("tm");
             auto opsRs = lastOperationPtr(this->getLastNumber().CALS_CONTEXT_QSTRING2STR(), this->getCurNumber().CALS_CONTEXT_QSTRING2STR());
             this->setCurOps(ops);
             this->setLastNumber(QString::fromStdString(to_string(opsRs)));
