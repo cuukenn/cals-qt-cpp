@@ -1,22 +1,31 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <iostream>
 #include "calscontext.h"
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
-    QQmlApplicationEngine engine;
-    const QUrl url(u"qrc:/cals-qt-cpp/Main.qml"_qs);
-    QObject::connect(
-        &engine, &QQmlApplicationEngine::objectCreated,
-        &app, [url](QObject *obj, const QUrl &objUrl)
-        {
+    try
+    {
+        QGuiApplication app(argc, argv);
+        QQmlApplicationEngine engine;
+        const QUrl url("qrc:/qml/main.qml");
+        QObject::connect(
+            &engine, &QQmlApplicationEngine::objectCreated,
+            &app, [url](QObject *obj, const QUrl &objUrl)
+            {
             if (!obj && url == objUrl)
                 QCoreApplication::exit(-1); },
-        Qt::QueuedConnection);
-    engine.rootContext()->setContextProperty("calsContext", new CalsContext);
-    engine.load(url);
+            Qt::QueuedConnection);
+        engine.rootContext()->setContextProperty("calsContext", new CalsContext);
+        engine.load(url);
 
-    return app.exec();
+        return app.exec();
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+        return -1;
+    }
 }
