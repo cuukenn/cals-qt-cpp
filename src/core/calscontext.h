@@ -3,16 +3,12 @@
 #include <map>
 using namespace std;
 
-#define CALS_CONTEXT_TYPE_INT
-
-#ifdef CALS_CONTEXT_TYPE_INT
-#define CALS_CONTEXT_TYPENAME int
-#define CALS_CONTEXT_QSTRING2STR toInt
-#endif
-
 #ifdef CALS_CONTEXT_TYPE_FLOAT
 #define CALS_CONTEXT_TYPENAME float
 #define CALS_CONTEXT_QSTRING2STR toFloat
+#else
+#define CALS_CONTEXT_TYPENAME int
+#define CALS_CONTEXT_QSTRING2STR toInt
 #endif
 
 class CalsContext : public QObject
