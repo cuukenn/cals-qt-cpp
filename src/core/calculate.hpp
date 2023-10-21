@@ -59,8 +59,7 @@ namespace calculate
         }
 #ifdef CALS_CONTEXT_TYPE_FLOAT
         return modf(left, &right);
-#endif
-#ifdef CALS_CONTEXT_TYPE_INT
+#else
         return left % right;
 #endif
     }
